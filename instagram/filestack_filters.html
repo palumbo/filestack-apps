@@ -1,0 +1,136 @@
+<html> 
+	<head> 
+		<title>Filestack-agram App</title>
+		<style> 
+			body { font-family: sans-serif; }
+			
+			table, td { 
+				border: 1px solid black; 
+				border-collapse: collapse; 
+			}
+			
+			td { 
+				padding: 15px; 
+			}
+			
+			img { 
+				max-height: 400; 
+				max-width: 600; 
+			}
+		</style> 
+		<script>
+			window.onload = function(){ 
+			document.getElementById('hidden').style.display = 'none'; 
+			}; 
+		</script> 
+	</head>
+	
+	<body> 
+		
+		<h1>Filestack Filter Demo</h1>
+		
+		<p>Select a photo to view it with filters</p>
+		<button onclick="instagram();">Select a photo</button>
+		<hr> 
+		
+		<table>
+			<tr>
+				<td>
+					<h2>Original</h2>
+					<img src="" id='orig'>
+				</td>
+				<td>
+					<h2>Sharpen</h2>
+					<img src="" id='sharpen'>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h2>Blur</h2>
+					<img src='' id='blur'>
+				</td>
+				<td>
+					<h2>Monochrome</h2>
+					<img src="" id='mono'> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h2>Sepia</h2>
+					<img src='' id='sepia'> 
+				</td>
+				<td>
+					<h2>Pixelate</h2>
+					<img src="" id='pixelate'> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h2>Oil Painting</h2>
+					<img src='' id='oil'>
+				</td>
+				<td> 
+					<h2>Modulate</h2>
+					<img src='' id='mod' /> 
+				</td>
+			</tr>
+		</table>
+		
+		<br /><hr />
+		<button onclick="reveal();">See the code</button>
+		<div id="hidden">
+			<script src="https://gist.github.com/palumbo/41f5464340ea99861454.js"></script>
+		</div>
+		
+	<script type="text/javascript" src="https://api.filestackapi.com/filestack.js"></script>	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>	
+	<script>
+		
+		filepicker.setKey("A1AJmUYdDTj2Y5wEFtRO7z"); 
+		var orig = document.getElementById('orig'); 
+		var sharpen = document.getElementById('sharpen'); 
+		var blur = document.getElementById('blur'); 
+		var mono = document.getElementById('mono'); 
+		var sepia = document.getElementById('sepia'); 
+		var pixelate = document.getElementById('pixelate'); 
+		var oil = document.getElementById('oil'); 
+		var mod = document.getElementById('mod'); 
+		
+		// create function for the button
+		function instagram(){ 
+			
+			filepicker.pick(
+				{
+					// mimetype: 'image/*', 
+					container: 'modal', 
+					services: ['COMPUTER', 'INSTAGRAM', 'FACEBOOK', 'FLICKR', 'PICASA', 'IMAGE_SEARCH'], 
+					imageDim: [610, 440]
+				}, 
+				function(Blob) {
+					console.log(Blob); 
+					console.log(Blob.url); 
+					// sharpen.src = "https://process.filestackapi.com/A1AJmUYdDTj2Y5wEFtRO7z/sharpen=amount:20/" + Blob.url;  
+					orig.src = Blob.url; 
+					sharpen.src = "https://process.filestackapi.com/A1AJmUYdDTj2Y5wEFtRO7z/sharpen/" + Blob.url; 
+					blur.src = "https://process.filestackapi.com/A1AJmUYdDTj2Y5wEFtRO7z/blur=amount:7/" + Blob.url; 
+					mono.src = "https://process.filestackapi.com/A1AJmUYdDTj2Y5wEFtRO7z/monochrome/" + Blob.url; 
+					sepia.src = "https://process.filestackapi.com/A1AJmUYdDTj2Y5wEFtRO7z/sepia/" + Blob.url;
+					pixelate.src = "https://process.filestackapi.com/A1AJmUYdDTj2Y5wEFtRO7z/pixelate=amount:7/" + Blob.url; 
+					oil.src = "https://process.filestackapi.com/A1AJmUYdDTj2Y5wEFtRO7z/oil_paint=amount:7/" + Blob.url; 
+					mod.src = "https://process.filestackapi.com/A1AJmUYdDTj2Y5wEFtRO7z/modulate=brightness:100,hue:240,saturation:200/" + Blob.url; 
+					
+					
+				}
+			)
+		}; 
+		
+		function reveal(){
+			var e = document.getElementById('hidden'); 
+			if (e.style.display == 'none')
+				e.style.display = 'block'; 
+			else 
+				e.style.display = 'none'; 
+		}
+	</script> 
+	</body>
+</html>

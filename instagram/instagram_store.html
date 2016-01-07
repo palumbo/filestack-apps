@@ -1,0 +1,107 @@
+<html> 
+	<head> 
+		<title>Instagram App</title>
+		<style> 
+			body { font-family: sans-serif; }
+			
+			table, td { 
+				border: 1px solid black; 
+				border-collapse: collapse; 
+			}
+			
+			td { 
+				padding: 15px; 
+			}
+		</style> 
+	</head>
+	
+	<body> 
+		
+		<h1>Palumbo's Instagram App</h1>
+		
+		<p>Select a photo to view it with filters</p>
+		<button onclick="instagram();">Select a photo</button>
+		<hr> 
+		
+		<table>
+			<tr>
+				<td>
+					<h2>Original</h2>
+					<!-- <img data-fp-src="http://pgmagick.readthedocs.org/en/latest/_images/transparent.png" data-fp-pixel-round="10" data-fp-on-resize="all" id='orig'/> -->
+					<img src="" id='orig'>
+				</td>
+				<td>
+					<h2>Sharpen</h2>
+					<img src="" id='sharpen'>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h2>Blur</h2>
+					<img src='' id='blur'>
+				</td>
+				<td>
+					<h2>Monochrome</h2>
+					<img src="" id='mono'> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h2>Sepia</h2>
+					<img src='' id='sepia'> 
+				</td>
+				<td>
+					<h2>Pixelate</h2>
+					<img src="" id='pixelate'> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h2>Oil Painting</h2>
+					<img src='' id='oil'>
+				</td>
+				<td> 
+					<h2>Modulate</h2>
+					<!-- <img data-fp-src="http://pgmagick.readthedocs.org/en/latest/_images/transparent.png" data-fp-pixel-round="10" data-fp-on-resize="all" id='mod'/> --> 
+					<img src='' id='mod' /> 
+				</td>
+			</tr>
+		</table>
+		
+	<script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>	
+	<script>
+		
+		filepicker.setKey("A03gGGNwHR4WJiSpdljdvz"); 
+		var orig = document.getElementById('orig'); 
+		var sharpen = document.getElementById('sharpen'); 
+		var blur = document.getElementById('blur'); 
+		var mono = document.getElementById('mono'); 
+		var sepia = document.getElementById('sepia'); 
+		var pixelate = document.getElementById('pixelate'); 
+		var oil = document.getElementById('oil'); 
+		var mod = document.getElementById('mod'); 
+		
+		// create function for the button
+		function instagram(){ 
+			filepicker.pickAndStore( 
+				{
+					mimetype: 'image/*', 
+					multiple: false, 
+					container: 'modal', 
+					services: ['IMAGE_SEARCH', 'FACEBOOK', 'INSTAGRAM', 'FLICKR', 'IMGUR'], 
+					openTo: 'IMAGE_SEARCH', 
+					imageMax: [610, 440]
+				}, 
+				{
+					container: 'S3'
+				}, 
+				function(Blob) { 
+					console.log(JSON.stringify(Blob)); 
+				}
+			)			
+		}; 
+		
+	</script> 
+	</body>
+</html>

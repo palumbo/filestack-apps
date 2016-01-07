@@ -1,0 +1,28 @@
+<html> 
+	<head> 
+		<title>Pulling Data from uploaded files</title>
+	</head>
+	
+	<body> 
+
+		<h1>Upload a photo to see the meta data</h1>
+		<button onclick="upload();">Upload File</button>
+		
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>	
+	<script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script> 
+	<script> 
+		filepicker.setKey('A03gGGNwHR4WJiSpdljdvz'); 
+
+		function upload() { 
+			filepicker.pick(
+				{}, 
+				function(Blob){ 
+					console.log(JSON.stringify(Blob)); 
+				}
+			); 
+		}
+
+	</script> 
+	</body>
+</html>

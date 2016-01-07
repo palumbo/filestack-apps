@@ -1,0 +1,148 @@
+<html>
+	<head>
+		<title>Onclick Table</title>
+		<style> 
+			body { font-family: sans-serif; }
+			table { border: black 1px solid; border-collapse: collapse; }	
+			td { border: black 1px solid; padding: 5px; }
+			#image { margin-top: 10px; padding-top: 10px; }
+		</style> 
+		<script>
+			window.onload = function(){ 
+				document.getElementById('hidden').style.display = 'none'; 
+				document.getElementById('code').style.display = 'none'; 
+			}; 
+		</script> 
+	</head>	
+	<body>
+		<h1>Filestack Stat Demo</h1>
+		<p>Once you get a file via <a href="https://www.filestack.com/docs/file-ingestion/javascript-api/pick">filepicker.pick</a>, <a href="https://www.filestack.com/docs/file-ingestion/javascript-api/store">filepicker.store</a>, <a href="https://www.filestack.com/docs/file-ingestion/javascript-api/convert">filepicker.convert</a>, or any of the other calls, you can use the <code>filepicker.stat</code> call to get more detailed metadata about the file.</p>
+		
+		<p>Upload a photo using the button below to see what kind of information can be returned. You can read the full documentation <a href="https://www.filestack.com/docs/file-ingestion/javascript-api/stat">here</a>.</p>
+		<button id='btn'>Upload Photo</button><button id="reset">Reset</button>
+		
+	<div id='hidden'>
+		<h3>Photo Information</h3>
+		<table>
+			<tr>
+				<td>Filename</td>
+				<td><span id="filename"></span></td>
+			</tr>
+			<tr>
+				<td>Mimetype</td>
+				<td><span id="mime"></span></td>
+			</tr>
+			<tr>
+				<td>Size</td>
+				<td><span id="size"></span></td>
+			</tr>
+			<tr>
+				<td>Height</td>
+				<td><span id="height"></span></td>
+			</tr>
+			<tr>
+				<td>Width</td>
+				<td><span id="width"</td>
+			</tr>
+			<tr>
+				<td>Uploaded</td>
+				<td><span id="upload"></span></td>
+			</tr>
+			<tr>
+				<td>MD5 Hash</td>
+				<td><span id="md5"></span></td>
+			</tr>
+			<tr> 
+				<td>Location</td>
+				<td><span id="location"></span></td>
+			</tr>
+			<tr> 
+				<td>Storage Path</td>
+				<td><span id="path"></span></td>
+			</tr>
+			<tr>
+				<td>Storage Container</td>
+				<td><span id="container"></span></td>
+			</tr>
+		</table>
+	</div>
+
+	<div id="image"></div>
+	
+	<hr /> 
+	<button id="reveal">See the code</button>
+	<div id="code">
+		<p>And here's the code:</p>
+		<script src="https://gist.github.com/palumbo/2ab14e1846ffe8809cc9.js"></script>
+	</div>
+
+		<script type="text/javascript" src="https://api.filestackapi.com/filestack.js"></script>	
+		<script>
+			
+			filepicker.setKey('AopG2llxERtqWEaj3lSjQz'); 
+			 
+			document.getElementById('btn').onclick = function(){  
+				filepicker.pick(
+					function(Blob){  
+						var url = Blob.url;
+						console.log(url);  
+						filepicker.stat(
+							url,
+							{
+								width: true, 
+								height: true,
+								uploaded: true,
+								md5: true,
+								location: true, 
+								path: true, 
+								size: true, 
+								container: true, 
+								filename: true, 
+								mimetype: true
+							},
+							function(metadata){ 
+								var img = document.createElement('img'); 
+								img.src = url; 
+								document.getElementById('image').appendChild(img); 
+								var s = metadata.size + " bytes"; 
+								var w = metadata.width + " pixels"; 
+								var h = metadata.height + " pixels";
+								var u = metadata.uploaded; 
+								var m = metadata.md5;  
+								var l = metadata.location; 
+								var p = metadata.path; 
+								var c = metadata.container; 
+								var f = metadata.filename; 
+								var i = metadata.mimetype; 
+								document.getElementById('mime').innerHTML = i; 
+								document.getElementById('filename').innerHTML = f; 
+								document.getElementById('size').innerHTML = s; 
+								document.getElementById('height').innerHTML = h; 
+								document.getElementById('width').innerHTML = w;  
+								document.getElementById('upload').innerHTML = u; 
+								document.getElementById('md5').innerHTML = m; 
+								document.getElementById('location').innerHTML = l; 
+								document.getElementById('path').innerHTML = p; 
+								document.getElementById('container').innerHTML = c; 
+								document.getElementById('hidden').style.display = 'block'; 
+							}
+						)
+					} 
+				)				
+				 
+			}; 
+
+			document.getElementById('reset').onclick = function(){ 
+				location.reload(); 
+			}; 
+			
+			document.getElementById('reveal').onclick = function(){ 
+				var e = document.getElementById('code'); 
+				if (e.style.display == 'block')
+					e.style.display = 'none'; 
+				else 
+					e.style.display = 'block'; 
+			}; 
+		</script>
+	</body>
+</html>
